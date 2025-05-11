@@ -342,9 +342,15 @@
                     </div>
 
                 <%
-                    }}}
+                    }}}else{
                 %>
-                <!-- Add more residence cards dynamically based on search results -->
+                 <div class="residence-card">
+                   <p><b>THERE ARE NO RESIDENCES AVAILABLE</b></p>       
+                 </div>
+                <%
+                    }
+                %>
+                
             </div>
         </div>
     </section>
