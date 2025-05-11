@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Add Provider - Thanix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Inherit styling from previous page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .add-provider {
+            padding: 80px 0;
+        }
+
+        .add-provider-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .add-provider-form button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .add-provider-form button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer .social-links img {
+            height: 24px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Thanix Logo">
+                <h1>Thanix Student Residence Finder</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#residences">Residences</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#login" class="btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Add Provider Section -->
+    <section class="add-provider">
+        <div class="container">
+            <h2>Add a New Provider</h2>
+            <form class="add-provider-form" action="AddProviderServlet" method="POST">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter first name" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Last Name</label>
+                    <input type="text" id="surname" name="surname" placeholder="Enter last name" required>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Telephone</label>
+                    <input type="tel" id="telephone" name="telephone" placeholder="Enter telephone number">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email address">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn">Add Provider</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Thanix Student Residence Finder. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+                <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function validateForm() {
+            const telephone = document.getElementById('telephone').value;
+            const email = document.getElementById('email').value;
+            
+            // Validate at least one contact method is provided
+            if (!telephone && !email) {
+                alert('Please provide at least one contact method (telephone or email).');
+                return false;
+            }
+
+            // Validate password strength
+            const password = document.getElementById('password').value;
+            const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                alert('Password must contain at least 8 characters with at least one letter and one number.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
