@@ -1,0 +1,26 @@
+<<<<<<< HEAD
+Sun May 11 09:15:29 SAST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Sun May 11 09:15:29 SAST 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0196-be32-e78f-000019f3905a 
+on database directory C:\Users\jayas\Desktop\Migigawa\Computer_Science\INT316D\to_github\ThanixResFinder\database\Thanix_Res_Finder_Database with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+Loaded from file:/C:/Program%20Files/Java/db-derby-10.17.1.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=22+36-2370
+user.dir=C:\Program Files\Java\db-derby-10.17.1.0-bin
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\jayas\Desktop\Migigawa\Computer_Science\INT316D\to_github\ThanixResFinder\database
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sun May 11 17:37:47 SAST 2025: Shutting down Derby engine
+----------------------------------------------------------------
+Sun May 11 17:37:47 SAST 2025:
+Shutting down instance a816c00e-0196-be32-e78f-000019f3905a on database directory C:\Users\jayas\Desktop\Migigawa\Computer_Science\INT316D\to_github\ThanixResFinder\database\Thanix_Res_Finder_Database with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e 
+=======
+Fri Apr 04 17:28:52 SAST 2025 : Apache Derby Network Server - 10.17.1.0 - (1913217) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Fri Apr 04 17:29:00 SAST 2025: Shutting down Derby engine
+>>>>>>> parent of 260a4ab (Edited database address)
+----------------------------------------------------------------
