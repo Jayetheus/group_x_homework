@@ -294,6 +294,9 @@
         .residence-card p {
             margin: 10px 0;
         }
+        p{
+            font-size: 1rem;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
