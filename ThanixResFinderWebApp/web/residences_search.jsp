@@ -1,14 +1,5 @@
-<%-- 
-    Document   : residences_search
-    Created on : Mar 13, 2025, 1:59:01 AM
-    Author     : Jayetheus
---%>
-
-<%@page import="jayethian.thanix.entity.Residence"%>
-<%@page import="java.util.List"%>
-<%@page import="jayethian.thanix.bean.ResidenceFacadeLocal"%>
-<%@page import="jakarta.ejb.EJB"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Residences - Thanix</title>
     <style>
-        /* General Styles */
+        /* Consolidated CSS */
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #0056b3;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            color: #333;
+            color: var(--text-color);
             line-height: 1.6;
         }
 
@@ -29,225 +27,73 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px 0;
         }
 
-        h1, h2, h3 {
+        header {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
             margin: 0;
-            font-weight: 600;
+            padding: 0;
         }
 
-        p {
-            margin: 10px 0;
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
         }
 
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: var(--primary-color);
             color: #fff;
-            text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
 
         .btn:hover {
-            background-color: #0056b3;
+            background-color: var(--secondary-color);
         }
 
-        /* Header */
-        header {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 20px 0;
-        }
-
-        header .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        header .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        header nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-
-        header nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* Hero Section */
-        .hero {
-            display: flex;
-            align-items: center;
-            padding: 100px 0;
-            background-color: #f4f4f4;
-        }
-
-        .hero-text {
-            flex: 1;
-        }
-
-        .hero-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .hero-image {
-            flex: 1;
-            text-align: right;
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-
-        /* About Section */
-        .about {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .about h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        /* Residences Section */
-        .residences {
-            padding: 80px 0;
-            background-color: #f4f4f4;
-        }
-
-        .residences h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-
-        .residence-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .residence-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .residence-card img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-
-        .residence-card h3 {
-            font-size: 1.5rem;
-            margin: 15px 0;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .contact h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        .contact form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .contact input, .contact textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .contact button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .contact button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        footer .social-links {
-            margin-top: 10px;
-        }
-
-        footer .social-links img {
-            height: 24px;
-            margin: 0 10px;
-        }
-
-
-
-        /* Search Section */
-        .search {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .search h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+        .search-section, .results-section {
+            padding: 40px 0;
         }
 
         .search-form {
             max-width: 600px;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
+            display: grid;
             gap: 20px;
         }
 
         .form-group {
-            text-align: left;
+            display: grid;
+            gap: 5px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .form-group input, .form-group select {
+        .form-control {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -255,53 +101,63 @@
             font-size: 1rem;
         }
 
-        /* Results Section */
-        .results {
-            padding: 80px 0;
-            background-color: #f4f4f4;
-        }
-
-        .results h2 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-
         .residence-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
+            padding: 20px 0;
         }
 
         .residence-card {
-            background-color: #fff;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .residence-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-badge {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: white;
             text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
         }
 
-        .residence-card img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-
-        .residence-card h3 {
-            font-size: 1.5rem;
-            margin: 15px 0;
-        }
-
-        .residence-card p {
-            margin: 10px 0;
-        }
-        p{
-            font-size: 1rem;
+        .no-results {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 1.2rem;
+            color: #666;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="container">
             <div class="logo">
@@ -319,73 +175,77 @@
             </nav>
         </div>
     </header>
-    
-    <!-- Search Results Section -->
-    <section id="results" class="results">
-        <div class="container">
-                                          
-            <div class="residence-grid">
-                <!-- Example Residence Card -->
-                
-                
-                <%
-                    
-                    List<Residence> reses = (List<Residence>)request.getAttribute("residences");
-                    if(reses != null){
-                    if(!reses.isEmpty()){
-                        for(Residence res : reses){
-                    
-                %>
-                    <div class="residence-card">
-                        <img src="residence1.jpg" alt="Residence 1">
-                        <h3><%=res.getName()%></h3>
-                        <p><strong>Location:</strong> <%= res.getCity() %>, <%= res.getState()%></p>
-                        <p><strong>Price:</strong> R2500/month</p>
-                        <p><strong>Room Type:</strong> <%= res.getRoom_type()%></p>
+
+    <main>
+        <section class="search-section">
+            <div class="container">
+                <h2>Find Your Perfect Student Residence</h2>
+                <form class="search-form" method="POST" action="Filter">
+                    <div class="form-group">
+                        <label for="city">Location</label>
+                        <input type="text" id="city" name="city" class="form-control" 
+                               placeholder="Enter city" required>
                     </div>
-
-                <%
-                    }}}
-                %>
-                <!-- Add more residence cards dynamically based on search results -->
+                    <div class="form-group">
+                        <label for="room_type">Room Type</label>
+                        <select id="room_type" name="room_type" class="form-control" required>
+                            <option value="">Select Room Type</option>
+                            <option value="SINGLE">Single Room</option>
+                            <option value="SHARING">Shared Room</option>
+                            <option value="MIXED">Mixed Rooms</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Search Residences</button>
+                </form>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Search Section -->
-    <section id="search" class="search">
-        <div class="container">
-            <h2>Search for Residences</h2>
-            <form class="search-form" method="POST" action="Filter">
-                <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" id="location" name="city" placeholder="Enter city" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="room-type">Room Type</label>
-                    <select id="room-type" name="room_type" required>
-                        <option value="">Select Room Type</option>
-                        <option value="SINGLE">Single Room</option>
-                        <option value="SHARING">Shared Room</option>
-                        <option value="MIXED">Mixed Rooms</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn">Search</button>
-            </form>
-        </div>
-    </section>
+        <section class="results-section">
+            <div class="container">
+                <c:choose>
+                    <c:when test="${not empty residences}">
+                        <div class="residence-grid">
+                            <c:forEach items="${residences}" var="res">
+                                <article class="residence-card">
+                                    <img src="residence1.jpg" alt="${res.name}" class="card-image">
+                                    <div class="card-content">
+                                        <c:if test="${res.nsfasAccredited}">
+                                            <span class="card-badge">NSFAS Accredited</span>
+                                        </c:if>
+                                        <h3>${res.name}</h3>
+                                        <p><strong>Location:</strong> ${res.city}, ${res.state}</p>
+                                        <p><strong>Room Type:</strong> ${res.roomType}</p>
+                                        <p><strong>Contact:</strong> ${res.telephone}</p>
+                                        <a href="#" class="btn" style="margin-top: 15px;">View Details</a>
+                                    </div>
+                                </article>
+                            </c:forEach>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="no-results">
+                            <p>No residences found matching your criteria. Please try different search parameters.</p>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </section>
+    </main>
 
-    <!-- Footer Section -->
     <footer>
         <div class="container">
-            <p>&copy; 2023 Thanix Student Residence Finder. All rights reserved.</p>
+            <p>&copy; ${year} Thanix Student Residence Finder. All rights reserved.</p>
             <div class="social-links">
-                <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-                <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
-                <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Add current year to footer
+        document.querySelector('footer p').innerHTML = `&copy; ${new Date().getFullYear()} Thanix Student Residence Finder. All rights reserved.`;
+    </script>
 </body>
 </html>
